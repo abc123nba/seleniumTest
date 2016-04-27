@@ -1,0 +1,14 @@
+test_baidu (test_baidu.MyTest) ... ok
+test_youdao (test_youdao.MyTest) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 26.985s
+
+OK
+Exception ignored in: <bound method Popen.__del__ of <subprocess.Popen object at 0x000000000327FBA8>>
+Traceback (most recent call last):
+  File "D:\Program Files\Python\lib\subprocess.py", line 1002, in __del__
+    self._internal_poll(_deadstate=_maxsize)
+  File "D:\Program Files\Python\lib\subprocess.py", line 1255, in _internal_poll
+    if _WaitForSingleObject(self._handle, 0) == _WAIT_OBJECT_0:
+OSError: [WinError 6] ¾ä±úÎÞÐ§¡£
