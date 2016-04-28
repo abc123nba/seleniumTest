@@ -17,3 +17,4 @@ for search in values:
     dr.find_element_by_id('su').click()
     dr.close()
 
+

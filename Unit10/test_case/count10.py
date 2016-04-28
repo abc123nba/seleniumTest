@@ -13,4 +13,3 @@ class Count:
     #计算减法
     def sub(self):
         return self.a - self.b
-
