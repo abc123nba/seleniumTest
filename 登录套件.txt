@@ -1,0 +1,305 @@
+*** Settings ***
+Library           Selenium2Library
+Library           AutoItLibrary
+
+*** Variables ***
+${username}       wangxiaoming
+${password}       12345678
+${url}            http://m.eduyun.cn
+
+*** Test Cases ***
+M登录
+    Open Browser    ${url}    ie
+    Maximize Browser Window
+    Input Text    id=info_username    ${username}
+    Click Element    id=info_password
+    Input Text    id=info_password    ${password}
+    Click Element    xpath=.//*[@id='loginForm']/p/input    #点击元素（登录）
+    Wait Until Page Contains Element    xpath=//div[@id='module_l']    #等待元素（消息中心、应用中心、资源中心、教育社区）出现
+    sleep    5
+    Close Browser
+
+首页进入文章
+    Open Browser    ${url}    chrome
+    Maximize Browser Window
+    Input Text    id=info_username    ${username}
+    Click Element    id=info_password
+    Input Text    id=info_password    ${password}
+    Click Element    xpath=.//*[@id='loginForm']/p/input    #点击元素（登录）
+    Wait Until Page Contains Element    xpath=.//*[@id='userinfo_25']/div/div/div[3]/span[1]/big    #等待元素（文章数字）出现
+    Mouse Over    xpath=.//*[@id='userinfo_25']/div/div/div[3]/span[1]/big    #鼠标移动到
+    Wait Until Page Contains Element    xpath=.//*[@id='userinfo_25']/div/div/div[3]/span[1]/a    #等待元素（文章）出现
+    Sleep    2
+    Click Element    xpath=.//*[@id='userinfo_25']/div/div/div[3]/span[1]/a    #点击元素（文章）
+    Sleep    5
+    Select Window    url=http://m.eduyun.cn/index.php?r=center/person/post/index    #通过url选择窗口
+    Wait Until Page Contains Element    xpath=.//*[@class='p_article']    #等待元素（写文章）出现
+    Click Element    xpath=.//*[@class='p_article']    #点击元素（写文章）
+    sleep    5
+    #Wait Until Page Contains Element    xpath=.//*[@id='tform']
+    Wait Until Page Contains Element    xpath=.//input[@id='title']    #等待元素（文章标题）出现
+    Close Browser
+
+空间首页进入照片
+    Open Browser    ${url}    chrome
+    Maximize Browser Window
+    Input Text    id=info_username    ${username}
+    Click Element    id=info_password
+    Input Text    id=info_password    ${password}
+    Click Element    xpath=.//*[@id='loginForm']/p/input    #点击元素（登录）
+    sleep    10
+    Wait Until Page Contains Element    xpath=.//*[@id='userinfo_25']/div/div/div[3]/span[2]/big    #等待元素（照片数字）出现
+    Mouse Over    xpath=.//*[@id='userinfo_25']/div/div/div[3]/span[2]/big    #鼠标移到到
+    #Wait Until Page Contains Element    xpath=.//*[@id='userinfo_25']/div/div/div[3]/span[2]/a    #等待元素（照片）出现
+    sleep    3
+    Click Element    xpath=.//*[@id='userinfo_25']/div/div/div[3]/span[2]/a    #点击元素（照片）
+    sleep    5
+    Select Window    url=http://m.eduyun.cn/index.php?r=center/person/Talbum/Index    #通过url选择窗口
+    Wait Until Page Contains Element    id=widget_createAlbum    #等待元素（创建新相册）出现
+    Close Browser
+
+空间首页进入资源
+    Open Browser    ${url}
+    Maximize Browser Window
+    Input Text    id=info_username    ${username}
+    Click Element    id=info_password
+    Input Text    id=info_password    ${password}
+    Click Element    xpath=.//*[@id='loginForm']/p/input    #点击元素（登录）
+    Wait Until Page Contains Element    xpath=.//*[@id='module_l']/div[3]/div[1]/div[1]/h2/span/a[1]    20    #等待元素（资源中心右侧的资源管理）出现
+    sleep    5
+    Click Element    xpath=.//*[@id='module_l']/div[3]/div[1]/div[1]/h2/span/a[1]    #点击元素（资源管理）
+    Wait Until Page Contains Element    xpath=.//*[@class='py_relative']    #等待元素（资源中心栏）出现
+    sleep    5
+    Alert Should Be Present    #验证警告存在并消除
+    sleep    3
+    Wait Until Page Contains Element    xpath=.//*[@class='m_main']    10    #等待元素（我的资源下方的主窗体）出现
+    Wait Until Page Contains Element    xpath=.//*[@class='m_main']/div/div[1]/a/span    #等待元素（上传资源）出现
+    focus    xpath=.//*[@class='m_main']/div/div[1]/a/span
+    Click Element    xpath=.//*[@class='m_main']/div/div[1]/a/span    #点击元素（上传资源）
+    sleep    3
+    Wait Until Page Contains Element    xpath=.//*[@class='d-inner']    #等待元素（上传文件窗体）出现
+    Select Frame    id=uploadFrame    #选择 iframe （选择文件）
+    focus    id=btnAddFiles
+    Click Button    id=btnAddFiles
+    sleep    5
+    Win Wait    打开    #窗口（打开）等待
+    Win Active    打开    #窗口（打开）激活
+    Control Set Text    \    \    Edit1    D:\\testlink\\Jellyfish.jpg    #输入要选择的文件（通过绝对路径）注意转义字符的处理
+    sleep    3
+    Control Click    \    \    Button1    #点击按钮（打开）
+    sleep    10
+    Unselect Frame    #取消 iframe （选择文件）
+    focus    xpath=.//*[@class='upload_file_box']/div[2]/span[1]
+    Click Element    xpath=.//*[@class='upload_file_box']/div[2]/span[1]/span[1]
+    Select From List By Value    xpath=.//*[@class='upload_file_box']/div[2]/span[1]/span[2]    3    #网络课程
+    sleep    5
+    focus    xpath=.//*[@id='uploadResBtn']
+    Click Button    xpath=.//*[@id='uploadResBtn']
+
+写文章完整
+    Open Browser    ${url}    chrome
+    Maximize Browser Window
+    Input Text    id=info_username    ${username}
+    Click Element    id=info_password
+    Input Text    id=info_password    ${password}
+    Click Element    xpath=.//*[@id='loginForm']/p/input    #点击元素（登录）
+    Wait Until Page Contains Element    xpath=.//*[@id='userinfo_25']/div/div/div[3]/span[1]/big    #等待元素（文章数字）出现
+    Mouse Over    xpath=.//*[@id='userinfo_25']/div/div/div[3]/span[1]/big    #鼠标移动到
+    Wait Until Page Contains Element    xpath=.//*[@id='userinfo_25']/div/div/div[3]/span[1]/a    #等待元素（文章）出现
+    Sleep    2
+    Click Element    xpath=.//*[@id='userinfo_25']/div/div/div[3]/span[1]/a    #点击元素（文章）
+    Sleep    5
+    Select Window    url=http://m.eduyun.cn/index.php?r=center/person/post/index    #通过url选择窗口
+    Wait Until Page Contains Element    xpath=.//*[@class='p_article']    #等待元素（写文章）出现
+    Click Element    xpath=.//*[@class='p_article']    #点击元素（写文章）
+    sleep    5
+    #Wait Until Page Contains Element    xpath=.//*[@id='tform']
+    Wait Until Page Contains Element    xpath=.//input[@id='title']    #等待元素（文章标题）出现
+    Click Element    xpath=.//input[@id='title']    #点击元素
+    Input Text    xpath=.//input[@id='title']    我的2016年    #文章标题输入内容
+    Sleep    3
+    Select Frame    id=ueditor_0    #选择 iframe （文章正文）
+    Input Text    xpath=html/body    20160509我的文章    #文章正文输入内容
+    Unselect Frame    #取消选择 iframe（文章正文）
+    Wait Until Page Contains Element    xpath=.//input[@class='inpBtn-Gray14']    #等待元素（添加附件）出现
+    Click Button    xpath=.//input[@class='inpBtn-Gray14']    #点击元素（添加附件）
+    Select Frame    id=resource_add    #选择 iframe （添加附件）
+    #focus    xpath=.//input[@resname='《散步》同步练习.doc']
+    #Select Checkbox    xpath=.//input[@resname='《散步》同步练习.doc']
+    focus    xpath=.//table[@id='dxan2']/tbody/tr[2]/td/label/input
+    select checkbox    xpath=.//table[@id='dxan2']/tbody/tr[2]/td/label/input    #勾选选择框
+    sleep    3
+    Unselect Frame    #取消选择 iframe （添加附件）
+    #Click Button    xpath=.//input[@value='确定']
+    focus    xpath=.//*[@class='d-footer']/div/input[1]
+    click button    xpath=.//*[@class='d-footer']/div/input[1]    #点击按钮（添加附件下的确定）
+    focus    id=tags_tag
+    input text    id=tags_tag    abc123    #添加标签内容
+    press key    id=tags_tag    \\13    #添加标签分隔符
+    focus    id=categoryid
+    Select From List By Value    categoryid    1413732    #作品
+    #Select From List By Value    categoryid    1413733    #笔记
+    #Select From List By Value    categoryid    1413734    #文档
+    focus    xpath=.//table[@class='qjf_zysb_table']/tbody/tr/td/label[1]
+    Click Element    xpath=.//table[@class='qjf_zysb_table']/tbody/tr[6]/td/label[1]/input    #置顶
+    #Click Element    xpath=.//table[@class='qjf_zysb_table']/tbody/tr[6]/td/label[2]/input    #不置顶
+    #Click Element    xpath=.//table[@class='qjf_zysb_table']/tbody/tr[8]/td/label[1]/input    #允许评论
+    Click Element    xpath=.//table[@class='qjf_zysb_table']/tbody/tr[8]/td/label[2]/input    #不允许评论
+    #Click Element    xpath=.//table[@class='qjf_zysb_table']/tbody/tr[10]/td/label[1]/input    #允许转载
+    Click Element    xpath=.//table[@class='qjf_zysb_table']/tbody/tr[10]/td/label[2]/input    #不允许转载
+    focus    id=password
+    Input Text    id=password    abc123    #输入密码
+    focus    xpath=.//table[@class='qjf_zysb_table']/tbody/tr[14]/td/select
+    #Select From List By Value    xpath=.//table[@class='qjf_zysb_table']/tbody/tr[14]/td/select    public    #公开
+    #Select From List By Value    xpath=.//table[@class='qjf_zysb_table']/tbody/tr[14]/td/select    follow    #关注者
+    #Select From List By Value    xpath=.//table[@class='qjf_zysb_table']/tbody/tr[14]/td/select    friend    #友好
+    Select From List By Value    xpath=.//table[@class='qjf_zysb_table']/tbody/tr[14]/td/select    private    #私密
+    Wait Until Page Contains Element    xpath=.//input[@id='publish-btn']    #等待元素（发表）出现
+    Click Button    id=publish-btn    #点击元素（发表）
+    Wait Until Page Contains Element    xpath=.//*[@class='space_crumb']    #等待元素（网站主页>文章>查看）出现
+    sleep    3
+    Close Browser
+
+新建相册
+    Open Browser    ${url}    chrome
+    Input Text    id=info_username    ${username}
+    Click Element    id=info_password
+    Input Text    id=info_password    ${password}
+    Click Element    xpath=.//*[@id='loginForm']/p/input    #点击元素（登录）
+    sleep    10
+    Wait Until Page Contains Element    xpath=.//*[@id='userinfo_25']/div/div/div[3]/span[2]/big    #等待元素（照片数字）出现
+    Mouse Over    xpath=.//*[@id='userinfo_25']/div/div/div[3]/span[2]/big    #鼠标移到到
+    #Wait Until Page Contains Element    xpath=.//*[@id='userinfo_25']/div/div/div[3]/span[2]/a    #等待元素（照片）出现
+    sleep    3
+    Click Element    xpath=.//*[@id='userinfo_25']/div/div/div[3]/span[2]/a    #点击元素（照片）
+    sleep    5
+    Select Window    url=http://m.eduyun.cn/index.php?r=center/person/Talbum/Index    #通过url选择窗口
+    Wait Until Page Contains Element    id=widget_createAlbum    #等待元素（创建新相册）出现
+    Click Element    id=widget_createAlbum    #点击元素（创建新相册）
+    sleep    3
+    Wait Until Page Contains Element    xpath=.//table[@class='d-border']    #等待元素（创建相册框）出现
+    focus    xpath=.//table[@class='d-border']/tbody/tr[2]/td[2]/div/table/tbody/tr[2]/td/div/div/form/table/tbody/tr[1]/td[2]/input
+    ${nowtime}    Evaluate    time.strftime("%H%M%S%m%d")    time    #显示时分秒月日
+    #${nowtime}    Evaluate    time.strftime("%H%M%S%Y%m%d")    time    #显示时分秒年月日
+    Input Text    xpath=.//table[@class='d-border']/tbody/tr[2]/td[2]/div/table/tbody/tr[2]/td/div/div/form/table/tbody/tr[1]/td[2]/input    ${nowtime}    #输入相册名称（唯一性）
+    focus    xpath=.//table[@class='d-border']/tbody/tr[2]/td[2]/div/table/tbody/tr[2]/td/div/div/form/table/tbody/tr[2]/td[2]/textarea
+    Input Text    xpath=.//table[@class='d-border']/tbody/tr[2]/td[2]/div/table/tbody/tr[2]/td/div/div/form/table/tbody/tr[2]/td[2]/textarea    2016年相册描述信息    #输入相册描述
+    focus    xpath=.//table[@class='d-border']/tbody/tr[2]/td[2]/div/table/tbody/tr[2]/td/div/div/form/table/tbody/tr[3]/td[2]/select
+    #Select From List By Value    xpath=.//table[@class='d-border']/tbody/tr[2]/td[2]/div/table/tbody/tr[2]/td/div/div/form/table/tbody/tr[3]/td[2]/select    1    #所有人可见
+    #Select From List By Value    xpath=.//table[@class='d-border']/tbody/tr[2]/td[2]/div/table/tbody/tr[2]/td/div/div/form/table/tbody/tr[3]/td[2]/select    2    #好友可见
+    Select From List By Value    xpath=.//table[@class='d-border']/tbody/tr[2]/td[2]/div/table/tbody/tr[2]/td/div/div/form/table/tbody/tr[3]/td[2]/select    3    #仅主人可见
+    focus    xpath=.//table[@class='d-border']/tbody/tr[2]/td[2]/div/table/tbody/tr[2]/td/div/div/form/table/tbody/tr[4]/td[2]/input[2]
+    Click Element    xpath=.//table[@class='d-border']/tbody/tr[2]/td[2]/div/table/tbody/tr[2]/td/div/div/form/table/tbody/tr[4]/td[2]/input[2]    #点击元素（确定）
+    Wait Until Page Does Not Contain Element    xpath=.//table[@class='d-border']    #等待元素（创建相册框）消失
+    sleep    3
+    Close Browser
+
+上传照片
+    Open Browser    ${url}    chrome
+    Maximize Browser Window
+    Input Text    id=info_username    ${username}
+    Click Element    id=info_password
+    Input Text    id=info_password    ${password}
+    Click Element    xpath=.//*[@id='loginForm']/p/input    #点击元素（登录）
+    sleep    10
+    Wait Until Page Contains Element    xpath=.//*[@id='userinfo_25']/div/div/div[3]/span[2]/big    #等待元素（照片数字）出现
+    Mouse Over    xpath=.//*[@id='userinfo_25']/div/div/div[3]/span[2]/big    #鼠标移到到
+    #Wait Until Page Contains Element    xpath=.//*[@id='userinfo_25']/div/div/div[3]/span[2]/a    #等待元素（照片）出现
+    sleep    3
+    Click Element    xpath=.//*[@id='userinfo_25']/div/div/div[3]/span[2]/a    #点击元素（照片）
+    sleep    5
+    Select Window    url=http://m.eduyun.cn/index.php?r=center/person/Talbum/Index    #通过url选择窗口
+    Wait Until Page Contains Element    xpath=.//*[@class='blueBtn-4']    #等待元素（上传照片）出现
+    Click Element    xpath=.//*[@class='blueBtn-4']    #点击元素（上传照片）
+    sleep    3
+    Wait Until Page Contains Element    xpath=.//*[@class='space_crumb']    #等待元素（我的主页>我的相册>上传照片）出现
+    focus    name=albumid
+    #Select From List By Value    name=albumid    13772    # 个人
+    #Select From List By Value    name=albumid    14062    # 想吃
+    #Select From List By Value    name=albumid    14761    # 贴图相册
+    #Select From List By Index    name=albumid    0    # 个人
+    #Select From List By Index    name=albumid    1    # 想吃
+    Select From List By Index    name=albumid    2    # 贴图相册
+    Wait Until Page Contains Element    id=uploadify    #等待元素（上传图片）出现
+    Click Element    id=uploadify    #点击元素（上传图片）
+    sleep    5
+    Win Wait    打开    #窗口（打开）等待
+    Win Active    打开    #窗口（打开）激活
+    Control Set Text    \    \    Edit1    D:\\testlink\\Jellyfish.jpg    #输入要选择的文件（通过绝对路径）注意转义字符的处理
+    sleep    3
+    Control Click    \    \    Button1    #点击按钮（打开）
+    Wait Until Page Contains Element    xpath=.//*[@class='delete_photo']    #等待元素（相册框里有照片，右上角有删除入口）出现
+    sleep    8
+    Wait Until Page Contains Element    name=description    #等待元素（照片说明）出现
+    focus    name=description
+    Input Text    name=description    照片描述信息    #输入照片描述
+    Wait Until Page Contains Element    id=photo_upload_sub    #等待元素（确定上传）出现
+    focus    id=photo_upload_sub
+    Click Element    id=photo_upload_sub    #点击元素（确定上传）
+    sleep    5
+    Close Browser
+
+相册上传完整
+    Open Browser    ${url}    chrome
+    Maximize Browser Window
+    Input Text    id=info_username    ${username}
+    Click Element    id=info_password
+    Input Text    id=info_password    ${password}
+    Click Element    xpath=.//*[@id='loginForm']/p/input    #点击元素（登录）
+    sleep    10
+    Wait Until Page Contains Element    xpath=.//*[@id='userinfo_25']/div/div/div[3]/span[2]/big    #等待元素（照片数字）出现
+    Mouse Over    xpath=.//*[@id='userinfo_25']/div/div/div[3]/span[2]/big    #鼠标移到到
+    #Wait Until Page Contains Element    xpath=.//*[@id='userinfo_25']/div/div/div[3]/span[2]/a    #等待元素（照片）出现
+    sleep    3
+    Click Element    xpath=.//*[@id='userinfo_25']/div/div/div[3]/span[2]/a    #点击元素（照片）
+    sleep    5
+    Select Window    url=http://m.eduyun.cn/index.php?r=center/person/Talbum/Index    #通过url选择窗口
+    Wait Until Page Contains Element    id=widget_createAlbum    #等待元素（创建新相册）出现
+    Click Element    id=widget_createAlbum    #点击元素（创建新相册）
+    sleep    3
+    Wait Until Page Contains Element    xpath=.//table[@class='d-border']    #等待元素（创建相册框）出现
+    focus    xpath=.//table[@class='d-border']/tbody/tr[2]/td[2]/div/table/tbody/tr[2]/td/div/div/form/table/tbody/tr[1]/td[2]/input
+    ${nowtime}    Evaluate    time.strftime("%H%M%S%m%d")    time    #显示时分秒月日
+    #${nowtime}    Evaluate    time.strftime("%H%M%S%Y%m%d")    time    #显示时分秒年月日
+    Input Text    xpath=.//table[@class='d-border']/tbody/tr[2]/td[2]/div/table/tbody/tr[2]/td/div/div/form/table/tbody/tr[1]/td[2]/input    ${nowtime}    #输入相册名称（唯一性）
+    focus    xpath=.//table[@class='d-border']/tbody/tr[2]/td[2]/div/table/tbody/tr[2]/td/div/div/form/table/tbody/tr[2]/td[2]/textarea
+    Input Text    xpath=.//table[@class='d-border']/tbody/tr[2]/td[2]/div/table/tbody/tr[2]/td/div/div/form/table/tbody/tr[2]/td[2]/textarea    2016年相册描述信息    #输入相册描述
+    focus    xpath=.//table[@class='d-border']/tbody/tr[2]/td[2]/div/table/tbody/tr[2]/td/div/div/form/table/tbody/tr[3]/td[2]/select
+    #Select From List By Value    xpath=.//table[@class='d-border']/tbody/tr[2]/td[2]/div/table/tbody/tr[2]/td/div/div/form/table/tbody/tr[3]/td[2]/select    1    #所有人可见
+    #Select From List By Value    xpath=.//table[@class='d-border']/tbody/tr[2]/td[2]/div/table/tbody/tr[2]/td/div/div/form/table/tbody/tr[3]/td[2]/select    2    #好友可见
+    Select From List By Value    xpath=.//table[@class='d-border']/tbody/tr[2]/td[2]/div/table/tbody/tr[2]/td/div/div/form/table/tbody/tr[3]/td[2]/select    3    #仅主人可见
+    focus    xpath=.//table[@class='d-border']/tbody/tr[2]/td[2]/div/table/tbody/tr[2]/td/div/div/form/table/tbody/tr[4]/td[2]/input[2]
+    Click Element    xpath=.//table[@class='d-border']/tbody/tr[2]/td[2]/div/table/tbody/tr[2]/td/div/div/form/table/tbody/tr[4]/td[2]/input[2]    #点击元素（确定）
+    Wait Until Page Does Not Contain Element    xpath=.//table[@class='d-border']    #等待元素（创建相册框）消失
+    sleep    3
+    Wait Until Page Contains Element    xpath=.//*[@class='blueBtn-4']    #等待元素（上传照片）出现
+    Click Element    xpath=.//*[@class='blueBtn-4']    #点击元素（上传照片）
+    sleep    3
+    Wait Until Page Contains Element    xpath=.//*[@class='space_crumb']    #等待元素（我的主页>我的相册>上传照片）出现
+    focus    name=albumid
+    #Select From List By Value    name=albumid    13772    # 个人
+    #Select From List By Value    name=albumid    14062    # 想吃
+    #Select From List By Value    name=albumid    14761    # 贴图相册
+    #Select From List By Index    name=albumid    0    # 个人
+    #Select From List By Index    name=albumid    1    # 想吃
+    Select From List By Index    name=albumid    2    # 贴图相册
+    Wait Until Page Contains Element    id=uploadify    #等待元素（上传图片）出现
+    Click Element    id=uploadify    #点击元素（上传图片）
+    sleep    5
+    Win Wait    打开    #窗口（打开）等待
+    Win Active    打开    #窗口（打开）激活
+    Control Set Text    \    \    Edit1    D:\\testlink\\Jellyfish.jpg    #输入要选择的文件（通过绝对路径）注意转义字符的处理
+    sleep    3
+    Control Click    \    \    Button1    #点击按钮（打开）
+    Wait Until Page Contains Element    xpath=.//*[@class='delete_photo']    #等待元素（相册框里有照片，右上角有删除入口）出现
+    sleep    8
+    Wait Until Page Contains Element    name=description    #等待元素（照片说明）出现
+    focus    name=description
+    Input Text    name=description    照片描述信息    #输入照片描述
+    Wait Until Page Contains Element    id=photo_upload_sub    #等待元素（确定上传）出现
+    focus    id=photo_upload_sub
+    Click Element    id=photo_upload_sub    #点击元素（确定上传）
+    sleep    5
+    Close Browser
+
+上传资源1
